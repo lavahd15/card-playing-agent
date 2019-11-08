@@ -31,6 +31,7 @@ class Player(object):
         and returns nothing.
         This list can be any length.
         """
+        self.my_hand = cards
         pass
 
     def play_card(self, lead, trick):
