@@ -1,4 +1,6 @@
 class Player(object):
+    agent_name = 'DEVIL'
+
     def __init__(self):
         pass
 
@@ -6,6 +8,7 @@ class Player(object):
         """
         Returns a string of the agent's name
         """
+        return self.agent_name
         pass
 
     def get_hand(self):
