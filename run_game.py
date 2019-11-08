@@ -23,16 +23,16 @@ def main():
     # player4.add_cards_to_hand(deck[39:52])
 
     player1 = Player()
-    player1.agent_name = "Player1"
+    player1.agent_name = "DEVIL"
 
-    clockwise_name = ["Player1", "J", "H", "B"]
+    clockwise_name = ["DEVIL", "J", "H", "B"]
     player1.new_hand(clockwise_name)
     player1.add_cards_to_hand(["4D", "5D", "TD", "2C", "8C", "2H", "3H", "4H", "7H", "8H", "9H", "5S", "AS"])
 
-    played_card = player1.play_card("Player1", [])
-    player1.collect_trick("Player 1", "B", ["4D", "9D", "8D", "QD"])
-
+    played_card = player1.play_card("DEVIL", [])
     print(played_card)
+
+    player1.collect_trick("DEVIL", "B", ["4D", "9D", "8D", "QD"])
 
 
 def get_randomized_deck():
