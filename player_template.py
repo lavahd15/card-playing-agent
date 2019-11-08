@@ -1,6 +1,12 @@
+import random
+
+
 class Player(object):
     agent_name = 'DEVIL'
     my_hand = []
+    player_names = []
+    played_cards = []
+    point = dict()
 
     def __init__(self):
         pass
@@ -23,6 +29,9 @@ class Player(object):
         and returns nothing. This method is also responsible for clearing any data
         necessary for your agent to start a new round.
         """
+        self.player_names = names
+        for name in names:
+            self.point[name] = 0
         pass
 
     def add_cards_to_hand(self, cards):
@@ -44,6 +53,11 @@ class Player(object):
         Returns a two character string from the agents hand of the card to be played
         into the trick.
         """
+        if len(trick) == 0 and lead == self.agent_name:
+            card_to_play = self.my_hand[0]
+            self.my_hand = self.my_hand[1:]
+            return card_to_play
+
         pass
 
     def collect_trick(self, lead, winner, trick):
@@ -52,6 +66,10 @@ class Player(object):
         Winner is the name of the player who won the trick. And trick is a four card
         list of the trick that was played. Should return nothing.
         """
+
+        self.played_cards = self.played_cards + trick
+        self.point[winner] = self.point[winner] + 1
+
         pass
 
     def score(self):
