@@ -1,6 +1,14 @@
 import random
 
 
+def get_random_card_to_play(hand):
+    return random.choice(hand)
+
+
+def is_lead_suit_exists(my_hand, first_card_of_trick: str):
+    return any(first_card_of_trick[1] in card[1] for card in my_hand)
+
+
 class Player(object):
     agent_name = 'DEVIL'
     my_hand = []
@@ -54,11 +62,15 @@ class Player(object):
         into the trick.
         """
         if len(trick) == 0 and lead == self.agent_name:
-            card_to_play = self.my_hand[0]
-            self.my_hand = self.my_hand[1:]
-            return card_to_play
+            card_to_play = get_random_card_to_play(self.my_hand)
+        else:
+            if is_lead_suit_exists(self.my_hand, trick[0]):
+                card_to_play = get_random_card_to_play([card for card in self.my_hand if trick[0][1] in card[1]])
+            else:
+                card_to_play = get_random_card_to_play(self.my_hand)
 
-        pass
+        self.my_hand.remove(card_to_play)
+        return card_to_play
 
     def collect_trick(self, lead, winner, trick):
         """
