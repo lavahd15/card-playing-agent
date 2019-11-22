@@ -32,7 +32,7 @@ def main():
     played_card = player1.play_card("DEVIL", [])
     print(played_card)
 
-    player1.collect_trick("DEVIL", "B", ["4D", "9D", "8D", "QD"])
+    player1.collect_trick("B", "H", ["4D", "9D", "8D", "QD"])
 
 
 def get_randomized_deck():

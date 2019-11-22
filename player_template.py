@@ -67,6 +67,10 @@ class Player(object):
         list of the trick that was played. Should return nothing.
         """
 
+        temp = self.player_names.index(lead)
+        print(temp)
+
+
         self.played_cards = self.played_cards + trick
         self.point[winner] = self.point[winner] + 1
         print("Scores after the round", self.point)
@@ -77,4 +81,7 @@ class Player(object):
         """
         Calculates and returns the score for the game being played.
         """
+
+
+
         pass
