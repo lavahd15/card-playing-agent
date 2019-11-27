@@ -10,6 +10,19 @@ Kaustubh Dhokte
 import random
 
 
+def get_new_deck():
+    suits = ["H", "S", "C", "D"]
+    ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"]
+    deck = []
+    for suit in suits:
+        temp =[]
+        for rank in ranks:
+            temp.append(rank + suit)
+        deck.append(temp)
+    print(deck)
+    return deck
+
+
 def get_random_card_to_play(hand):
     return random.choice(hand)
 
@@ -18,12 +31,26 @@ def is_lead_suit_exists(my_hand, first_card_of_trick: str):
     return any(first_card_of_trick[1] in card[1] for card in my_hand)
 
 
+def get_card_to_play(trick, my_hand, state):
+    if len(trick) == 0:
+        pass
+    elif len(trick) == 1 or len(trick) == 2:
+        pass
+    elif len(trick) == 3:
+        pass
+
+
 class Player(object):
     agent_name = 'DEVIL'
     my_hand = []
     player_names = []
     played_cards = []
     point = dict()
+    state = []
+    heart = 0
+    spades = 1
+    club = 2
+    diamond = 3
 
     def __init__(self):
         pass
@@ -49,7 +76,8 @@ class Player(object):
         self.player_names = names
         for name in names:
             self.point[name] = 0
-        pass
+        self.state = get_new_deck()
+        self.my_hand = []
 
     def add_cards_to_hand(self, cards):
         """
@@ -58,9 +86,6 @@ class Player(object):
         This list can be any length.
         """
         self.my_hand = self.my_hand + cards
-        print(self.agent_name, len(self.my_hand), self.my_hand)
-
-        pass
 
     def play_card(self, lead, trick):
         """
@@ -70,14 +95,8 @@ class Player(object):
         Returns a two character string from the agents hand of the card to be played
         into the trick.
         """
-        if len(trick) == 0 and lead == self.agent_name:
-            card_to_play = get_random_card_to_play(self.my_hand)
-        else:
-            if is_lead_suit_exists(self.my_hand, trick[0]):
-                card_to_play = get_random_card_to_play([card for card in self.my_hand if trick[0][1] in card[1]])
-            else:
-                card_to_play = get_random_card_to_play(self.my_hand)
 
+        card_to_play = get_card_to_play(trick, self.my_hand, self.state)
         self.my_hand.remove(card_to_play)
         return card_to_play
 
@@ -88,7 +107,6 @@ class Player(object):
         list of the trick that was played. Should return nothing.
         """
 
-        temp = self.player_names.index(lead)
         self.played_cards = self.played_cards + trick
         self.point[winner] = self.point[winner] + 1
         print("Scores after the round", self.point)
