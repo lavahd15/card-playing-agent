@@ -213,6 +213,9 @@ class Player(object):
         Winner is the name of the player who won the trick. And trick is a four card
         list of the trick that was played. Should return nothing.
         """
+        for i in trick:
+            suit = i[1]
+            self.state[suit].remove(i)
 
         self.played_cards = self.played_cards + trick
         self.point[winner] = self.point[winner] + 1
