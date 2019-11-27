@@ -15,7 +15,7 @@ def get_new_deck():
     ranks = ["A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2"]
     deck = []
     for suit in suits:
-        temp =[]
+        temp = []
         for rank in ranks:
             temp.append(rank + suit)
         deck.append(temp)
@@ -40,16 +40,21 @@ def get_card_to_play_last(trick, hand):
             highest_rank_in_play = card[0]
     cards_can_be_played = hand[suit_in_play]
     rank_cards_to_be_played = [ranks.index(card[0]) for card in cards_can_be_played]
+
     if len(cards_can_be_played) > 0:
-        higher_rank_cards_to_be_played = [card_rank for card_rank in rank_cards_to_be_played if card_rank > ranks.index(highest_rank_in_play)]
+        higher_rank_cards_to_be_played = [card_rank for card_rank in rank_cards_to_be_played if
+                                          card_rank > ranks.index(highest_rank_in_play)]
         if len(higher_rank_cards_to_be_played) > 0:
             return ranks[min(higher_rank_cards_to_be_played)] + suit_in_play
         else:
             return ranks[min(rank_cards_to_be_played)] + suit_in_play
     else:
-        pass
+        remaining_non_suit_cards = [v for v_arr in hand.values() for v in v_arr]
+        min_rank = min([ranks.index(card[0]) for card in remaining_non_suit_cards])
+        likely_cards = [card for card in remaining_non_suit_cards if ranks.index(card[0]) == min_rank]
+        random.shuffle(likely_cards)
+        return likely_cards[0]
 
-    
 
 def get_card_to_play(trick, my_hand, state):
     hand = dict()
