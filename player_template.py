@@ -56,6 +56,49 @@ def get_card_to_play_last(trick, hand):
         return likely_cards[0]
 
 
+def get_card_to_play_first(my_hand, state):
+    weights = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2']
+    suits = ["H", "S", "C", "D"]
+    def sort_cards():
+        sorted_cards = []
+        # sort all the cards according to weights not suits
+        for suit in suits:
+            new_suit_cards = []
+            for weight in weights:
+                for card in my_hand:
+                    if card[0] == weight and card[1] == suit:
+                        new_suit_cards.append(card)
+            sorted_cards.append(new_suit_cards)
+        return sorted_cards
+
+    def get_bigger_card(card, state):
+        ranks = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A']
+        suit = card[1]
+        suit_cards = state[suit]
+        card_index = ranks.index(card[0])
+        for index in range(card_index+1, len(ranks)-1):
+            crd = ranks[index]
+            if crd in suit_cards:
+                crd = crd + suit
+                return crd
+        return None
+
+    # sort cards suit wise and rank wise
+    # e.g. sorted_cards = [['AS', 'KS', '8S'], ['7H', '4H'], ['8D', '5D', '3D'], ['4C', '2C']]
+    sorted_cards = sort_cards()
+    # Select the card to play from sorted list
+    for suit in sorted_cards:
+        card = suit[0]
+        bigger_card = get_bigger_card(card, state)
+        if not bigger_card:
+            return card
+
+    suit_lengths = [len(suit) for suit in sorted_cards]
+    max_length_suit = max(suit_lengths)
+    max_length_suit_index = suit_lengths.index(max_length_suit)
+    return sorted_cards[max_length_suit_index][max_length_suit-1]
+
+
 def get_card_to_play(trick, my_hand, state):
     hand = dict()
 
