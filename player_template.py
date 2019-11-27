@@ -9,6 +9,7 @@ Kaustubh Dhokte
 
 import random
 
+
 def get_random_card_to_play(hand):
     return random.choice(hand)
 
@@ -57,6 +58,8 @@ class Player(object):
         This list can be any length.
         """
         self.my_hand = self.my_hand + cards
+        print(self.agent_name, len(self.my_hand), self.my_hand)
+
         pass
 
     def play_card(self, lead, trick):
@@ -88,6 +91,8 @@ class Player(object):
         temp = self.player_names.index(lead)
         self.played_cards = self.played_cards + trick
         self.point[winner] = self.point[winner] + 1
+        print("Scores after the round", self.point)
+
         pass
 
     def score(self):
