@@ -31,13 +31,24 @@ def is_lead_suit_exists(my_hand, first_card_of_trick: str):
     return any(first_card_of_trick[1] in card[1] for card in my_hand)
 
 
-def get_card_to_play_last(trick, my_hand, state):
+def get_card_to_play_last(trick, hand):
     ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"]
     suit_in_play = trick[0][1]
     highest_rank_in_play = "2"
     for card in trick:
         if ranks.index(card[0]) > ranks.index(highest_rank_in_play):
             highest_rank_in_play = card[0]
+    cards_can_be_played = hand[suit_in_play]
+    rank_cards_to_be_played = [ranks.index(card[0]) for card in cards_can_be_played]
+    if len(cards_can_be_played) > 0:
+        higher_rank_cards_to_be_played = [card_rank for card_rank in rank_cards_to_be_played if card_rank > ranks.index(highest_rank_in_play)]
+        if len(higher_rank_cards_to_be_played) > 0:
+            return ranks[min(higher_rank_cards_to_be_played)] + suit_in_play
+        else:
+            return ranks[min(rank_cards_to_be_played)] + suit_in_play
+    else:
+        pass
+
     
 
 def get_card_to_play(trick, my_hand, state):
@@ -67,7 +78,7 @@ def get_card_to_play(trick, my_hand, state):
             pass
 
     elif len(trick) == 3:
-        get_card_to_play_last(trick, my_hand, state)
+        get_card_to_play_last(trick, hand)
 
 
 class Player(object):
