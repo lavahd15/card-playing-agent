@@ -12,7 +12,7 @@ import random
 
 def get_new_deck():
     suits = ["H", "S", "C", "D"]
-    ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"]
+    ranks = ["A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2"]
     deck = []
     for suit in suits:
         temp =[]
@@ -32,10 +32,31 @@ def is_lead_suit_exists(my_hand, first_card_of_trick: str):
 
 
 def get_card_to_play(trick, my_hand, state):
+    hand = dict()
+
+    for x in my_hand:
+        suit = x[1]
+        if suit in hand.keys():
+            hand[suit].append([x])
+        else:
+            hand[suit] = [x]
+
     if len(trick) == 0:
         pass
+
     elif len(trick) == 1 or len(trick) == 2:
-        pass
+        first_card = trick[0]
+        first_suit = first_card[1]
+
+        if first_suit == 'S':
+            pass
+        elif first_suit == 'H':
+            pass
+        elif first_suit == 'C':
+            pass
+        elif first_suit == 'D':
+            pass
+
     elif len(trick) == 3:
         pass
 
