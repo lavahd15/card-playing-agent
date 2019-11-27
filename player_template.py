@@ -9,6 +9,11 @@ Kaustubh Dhokte
 
 import random
 
+H = 0
+S = 1
+C = 2
+D = 3
+
 
 def get_new_deck():
     suits = ["H", "S", "C", "D"]
@@ -29,6 +34,23 @@ def get_random_card_to_play(hand):
 
 def is_lead_suit_exists(my_hand, first_card_of_trick: str):
     return any(first_card_of_trick[1] in card[1] for card in my_hand)
+
+
+def get_card_to_play_two_three(suit, trick, hand, state):
+    result = ''
+
+    if not hand[suit]:
+        pass
+    else:
+        cards_available_to_play = hand[suit]
+        if cards_available_to_play[0] == state[suit][0]:
+            result = cards_available_to_play[0]
+        else:
+            temp = len(cards_available_to_play)
+            temp -= 1
+            result = cards_available_to_play[temp]
+
+    return result
 
 
 def get_card_to_play_last(trick, hand):
@@ -59,6 +81,7 @@ def get_card_to_play_last(trick, hand):
 def get_card_to_play_first(my_hand, state):
     weights = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2']
     suits = ["H", "S", "C", "D"]
+
     def sort_cards():
         sorted_cards = []
         # sort all the cards according to weights not suits
@@ -101,6 +124,7 @@ def get_card_to_play_first(my_hand, state):
 
 def get_card_to_play(trick, my_hand, state):
     hand = dict()
+    result = ''
 
     for x in my_hand:
         suit = x[1]
@@ -110,23 +134,18 @@ def get_card_to_play(trick, my_hand, state):
             hand[suit] = [x]
 
     if len(trick) == 0:
-        pass
+        result = get_card_to_play_first(hand, state)
 
     elif len(trick) == 1 or len(trick) == 2:
         first_card = trick[0]
         first_suit = first_card[1]
 
-        if first_suit == 'S':
-            pass
-        elif first_suit == 'H':
-            pass
-        elif first_suit == 'C':
-            pass
-        elif first_suit == 'D':
-            pass
+        result = get_card_to_play_two_three(first_suit, trick, hand, state)
 
     elif len(trick) == 3:
-        get_card_to_play_last(trick, hand)
+        result = get_card_to_play_last(trick, hand)
+
+    return result
 
 
 class Player(object):
@@ -184,7 +203,6 @@ class Player(object):
         Returns a two character string from the agents hand of the card to be played
         into the trick.
         """
-
         card_to_play = get_card_to_play(trick, self.my_hand, self.state)
         self.my_hand.remove(card_to_play)
         return card_to_play
