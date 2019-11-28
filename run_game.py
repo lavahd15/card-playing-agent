@@ -42,7 +42,7 @@ def main():
     # player1 = Player()
     # player1.agent_name = "DEVIL"
     #
-    # clockwise_name = ["DEVIL", "J", "H", "B"]
+    clockwise_name = ["DEVIL", "J", "H", "B"]
     # player1.new_hand(clockwise_name)
     # player1.add_cards_to_hand(["4D", "5D", "TD", "2C", "8C", "2H", "3H", "4H", "7H", "8H", "9H", "5S", "AS"])
     #
@@ -51,6 +51,11 @@ def main():
     #
     # player1.collect_trick("B", "H", ["4D", "9D", "8D", "QD"])
     print(player_template.get_new_deck())
+    player1 = Player()
+    player1.agent_name = "Player1"
+    player1.new_hand(clockwise_name)
+    player1.add_cards_to_hand(["2C", "4C", "6C", "8C", "TC", "JC", "KC", "2S", "9S", "TS", "KS", "AS", "TD"])
+    print(player1.play_card(player1.agent_name, []))
 
 
 def get_randomized_deck():

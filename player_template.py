@@ -82,7 +82,6 @@ def get_card_to_play_last(trick, hand):
 def get_card_to_play_first(my_hand, state):
     weights = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2']
     suits = ["H", "S", "C", "D"]
-
     def sort_cards():
         sorted_cards = []
         # sort all the cards according to weights not suits
@@ -95,27 +94,25 @@ def get_card_to_play_first(my_hand, state):
             sorted_cards.append(new_suit_cards)
         return sorted_cards
 
-    def get_bigger_card(card, state):
-        ranks = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A']
-        suit = card[1]
-        suit_cards = state[suit]
-        card_index = ranks.index(card[0])
-        for index in range(card_index+1, len(ranks)):
-            crd = ranks[index]
-            if crd in suit_cards:
-                crd = crd + suit
-                return crd
-        return None
+    def is_card_biggest_in_suit(card, state):
+        global suits
+        weight_index = weights.index(card[0])
+        suit_index = suits.index(card[1])
+        suit = state[suit_index]
+        for index in range(0, weight_index):
+            if weights[index] in suit:
+                return False
+        return True
 
     # sort cards suit wise and rank wise
     # e.g. sorted_cards = [['AS', 'KS', '8S'], ['7H', '4H'], ['8D', '5D', '3D'], ['4C', '2C']]
     sorted_cards = sort_cards()
     # Select the card to play from sorted list
     for suit in sorted_cards:
-        card = suit[0]
-        bigger_card = get_bigger_card(card, state)
-        if not bigger_card:
-            return card
+        if len(suit) > 0:
+            card = suit[0]
+            if is_card_biggest_in_suit(card, state):
+                return card
 
     suit_lengths = [len(suit) for suit in sorted_cards]
     max_length_suit = max(suit_lengths)
@@ -144,8 +141,7 @@ def get_card_to_play(trick, my_hand, state):
 
     if len(trick) == 0:
         if len(my_hand):
-            card = get_card_to_play_first(my_hand, state)
-            my_hand.remove(card)
+            result = get_card_to_play_first(my_hand, state)
 
     elif len(trick) == 1 or len(trick) == 2:
         first_card = trick[0]
