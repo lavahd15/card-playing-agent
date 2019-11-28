@@ -100,7 +100,7 @@ def get_card_to_play_first(my_hand, state):
         suit = card[1]
         suit_cards = state[suit]
         card_index = ranks.index(card[0])
-        for index in range(card_index+1, len(ranks)-1):
+        for index in range(card_index+1, len(ranks)):
             crd = ranks[index]
             if crd in suit_cards:
                 crd = crd + suit
@@ -119,8 +119,16 @@ def get_card_to_play_first(my_hand, state):
 
     suit_lengths = [len(suit) for suit in sorted_cards]
     max_length_suit = max(suit_lengths)
-    max_length_suit_index = suit_lengths.index(max_length_suit)
-    return sorted_cards[max_length_suit_index][max_length_suit-1]
+    max_length_suit_indices = [index for index, length in enumerate(suit_lengths) if length == max_length_suit]
+    smallest = 0
+    card_to_return = sorted_cards[max_length_suit_indices[0]][0]
+    for index in max_length_suit_indices:
+        card = sorted_cards[index][max_length_suit-1]
+        card_rank = card[0]
+        if weights.index(card_rank) > smallest:
+            smallest = weights.index(card_rank)
+            card_to_return = card
+    return card_to_return
 
 
 def get_card_to_play(trick, my_hand, state):
@@ -135,7 +143,9 @@ def get_card_to_play(trick, my_hand, state):
             hand[suit] = [x]
 
     if len(trick) == 0:
-        result = get_card_to_play_first(hand, state)
+        if len(my_hand):
+            card = get_card_to_play_first(my_hand, state)
+            my_hand.remove(card)
 
     elif len(trick) == 1 or len(trick) == 2:
         first_card = trick[0]
