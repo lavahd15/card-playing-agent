@@ -13,6 +13,7 @@ H = 0
 S = 1
 C = 2
 D = 3
+suits = ["H", "S", "C", "D"]
 
 
 def get_new_deck():
@@ -43,7 +44,7 @@ def get_card_to_play_two_three(suit, trick, hand, state):
         pass
     else:
         cards_available_to_play = hand[suit]
-        if cards_available_to_play[0] == state[suit][0]:
+        if cards_available_to_play[0] == state[suits.index(suit)][0]:
             result = cards_available_to_play[0]
         else:
             temp = len(cards_available_to_play)
