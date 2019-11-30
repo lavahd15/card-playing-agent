@@ -64,7 +64,7 @@ def get_card_to_play_last(trick, hand):
         if ranks.index(card[0]) > ranks.index(highest_rank_in_play):
             highest_rank_in_play = card[0]
 
-    if suit_in_play in hand:
+    if suit_in_play in hand and len(hand[suit_in_play]) > 0:
         cards_can_be_played = []
 
         for v_arr in hand[suit_in_play]:
