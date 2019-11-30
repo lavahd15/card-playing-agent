@@ -50,13 +50,16 @@ def main():
     # print(played_card)
     #
     # player1.collect_trick("B", "H", ["4D", "9D", "8D", "QD"])
-    print(player_template.get_new_deck())
+    deck = player_template.get_new_deck()
+    # print(player_template.get_new_deck())
     player1 = Player()
     player1.agent_name = "Player1"
     player1.new_hand(clockwise_name)
     player1.add_cards_to_hand(["2C", "4C", "6C", "8C", "TC", "JC", "KC", "2S", "9S", "TS", "KS", "AS", "TD"])
-    print(player1.play_card(player1.agent_name, []))
+    hand = ["2C", "4C", "6C", "8C", "TC", "JC", "KC", "2S", "9S", "TS", "KS", "AS"]
 
+    print(player_template.get_card_to_play(["KD",'JD',"2D"], hand,[["A","K","Q","J","T","9", "8", "7", "6", "5", "4", "3", "2"], [ "Q", "J","8","7","6","5", "4","3"],
+              ["A","Q","9","7","5","3"], ["A","Q","T","9","8","7","6", "5", "4","3"]]))
 
 def get_randomized_deck():
     suits = ["H", "S", "C", "D"]
