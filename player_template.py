@@ -39,7 +39,19 @@ def get_card_to_play_two_three(suit, trick, hand, state):
     result = ''
     suit_in_play = trick[0][1]
     if suit_in_play not in hand:
-        pass
+        # pass
+        remaining_non_suit_cards = []
+        for v_arr in hand.values():
+            for v in v_arr:
+                if isinstance(v, list):
+                    remaining_non_suit_cards.append(v[0])
+                else:
+                    remaining_non_suit_cards.append(v)
+
+        min_rank = min([ranks.index(card[0]) for card in remaining_non_suit_cards])
+        likely_cards = [card for card in remaining_non_suit_cards if ranks.index(card[0]) == min_rank]
+        random.shuffle(likely_cards)
+        return likely_cards[0]
     else:
         cards_available_to_play = []
         for v_arr in hand[suit_in_play]:
