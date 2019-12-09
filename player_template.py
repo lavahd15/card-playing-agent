@@ -63,7 +63,8 @@ def get_card_to_play_two_three(suit, trick, hand, state):
             else:
                 cards_available_to_play.append(v_arr)
         # If state does not contain our cards then why comparing cards_available_to_play with state
-        if cards_available_to_play[0] == state[suits.index(suit)][0]:
+        len = len(state[suits.index(suit)])
+        if cards_available_to_play[0] == state[suits.index(suit)][(len - 1)]:
             result = cards_available_to_play[0]
         else:
             temp = len(cards_available_to_play)
@@ -193,7 +194,6 @@ def get_card_to_play(trick, my_hand, state):
         return temp_dict
 
     hand = sort_cards()
-
 
     if len(trick) == 0:  # length of trick is 0 so that  means ours is first chance
         if len(my_hand):  # If we have cards in hand
