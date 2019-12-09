@@ -54,7 +54,10 @@ def get_card_to_play_two_three(suit, trick, hand, state):
         return likely_cards[0]
     else:
         cards_available_to_play = []
+        # print(hand[suit_in_play])
         for v_arr in hand[suit_in_play]:
+            # print()
+            # print(v_arr)
             if isinstance(v_arr, list):
                 cards_available_to_play.append(v_arr[0])
             else:
@@ -162,12 +165,35 @@ def get_card_to_play(trick, my_hand, state):
     hand = dict()  # hand has keys of suit and values is the list of cards available
     result = ''
 
-    for x in my_hand:  # my_hand = ["2C", "4C", "6C", "8C", "TC", "JC", "KC", "2S", "9S", "TS", "KS", "AS", "TD"] #why for loop
-        suit = x[1]
-        if suit in hand.keys():  # If suit is present in hand than append in list else assign the suit to hand list
-            hand[suit].append([x])  # why this
-        else:
-            hand[suit] = [x]
+    # for x in my_hand:  # my_hand = ["2C", "4C", "6C", "8C", "TC", "JC", "KC", "2S", "9S", "TS", "KS", "AS", "TD"] #why for loop
+    #     suit = x[1]
+    #     if suit in hand.keys():  # If suit is present in hand than append in list else assign the suit to hand list
+    #         hand[suit].append([x])  # why this
+    #     else:
+    #         hand[suit] = [x]
+
+    weights = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2']
+
+    def sort_cards():
+        sorted_cards = []
+        temp_dict = dict()
+        # sort all the cards according to weights not suits
+        for suit in suits:
+            new_suit_cards = []
+            for weight in weights:
+                for card in my_hand:
+                    if card[0] == weight and card[1] == suit:
+                        new_suit_cards.append(card)
+            sorted_cards.append(new_suit_cards)
+
+        for card_list in sorted_cards:
+            if len(card_list):
+                suit = card_list[0][1]
+                temp_dict[suit] = card_list
+        return temp_dict
+
+    hand = sort_cards()
+
 
     if len(trick) == 0:  # length of trick is 0 so that  means ours is first chance
         if len(my_hand):  # If we have cards in hand

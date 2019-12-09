@@ -56,13 +56,13 @@ def main():
     player1.agent_name = "Player1"
     player1.new_hand(clockwise_name)
     player1.add_cards_to_hand(["2C", "4C", "6C", "8C", "TC", "JC", "KC", "2S", "9S", "TS", "KS", "AS", "TD"])
-    hand = ["2C", "4C", "6C", "8C", "TC", "JC", "KC", "2S", "9S", "TS", "KS", "AS"]
+    hand = ["2C", "4C", "6C", "8C", "TC", "JC", "KC", "2S", "9S", "TS", "KS", "AS","7D","QD"]
 
-    print(player_template.get_card_to_play(["KD", 'JD', "2D"], hand,
+    print(player_template.get_card_to_play(["KD", 'JD'], hand,
                                            [["A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2"],
                                             ["Q", "J", "8", "7", "6", "5", "4", "3"],
                                             ["A", "Q", "9", "7", "5", "3"],
-                                            ["A", "Q", "T", "9", "8", "7", "6", "5", "4", "3"]]))
+                                            ["A", "T", "9", "8", "6", "5", "4", "3","2"]]))
 
 
 def get_randomized_deck():
