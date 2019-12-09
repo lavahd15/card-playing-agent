@@ -252,7 +252,7 @@ class Player(object):
         list of the trick that was played. Should return nothing.
         """
         for i in trick:
-            suit = i[1]
+            suit = suits.index(i[1])
             self.state[suit].remove(i)  # do not know
 
         self.played_cards = self.played_cards + trick
@@ -265,4 +265,4 @@ class Player(object):
         """
         Calculates and returns the score for the game being played.
         """
-        pass
+        return self.point[self.agent_name]
