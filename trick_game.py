@@ -186,10 +186,11 @@ def resolve_trick(trick):
 
 
 class Game(object):
-    def __init__(self, agent):
+    def __init__(self, agent, agent1):
         self._players = [
             agent,
-            Player('Leonardo'),
+            agent1,
+            #Player('Leonardo'),
             Player('Donatello'),
             Player('Rafael')
         ]
@@ -266,8 +267,11 @@ class Game(object):
 
 
 if __name__ == '__main__':
-    ARGS, unused = parse_args()
+    ARGS = "player_template"
 
-    agent_module = importlib.import_module(ARGS.player_file, '.')
-    game = Game(agent_module.Player())
+    agent_module = importlib.import_module(ARGS, '.')
+    player = agent_module.Player()
+    player1 = agent_module.Player()
+    player1.agent_name = "DEVIL1"
+    game = Game(player, player1)
     game.play_game()
