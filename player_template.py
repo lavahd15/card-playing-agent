@@ -63,8 +63,8 @@ def get_card_to_play_two_three(suit, trick, hand, state):
             else:
                 cards_available_to_play.append(v_arr)
         # If state does not contain our cards then why comparing cards_available_to_play with state
-        len = len(state[suits.index(suit)])
-        if cards_available_to_play[0] == state[suits.index(suit)][(len - 1)]:
+        length = len(state[suits.index(suit)])
+        if cards_available_to_play[0] == state[suits.index(suit)][(length - 1)]:
             result = cards_available_to_play[0]
         else:
             temp = len(cards_available_to_play)
@@ -112,7 +112,7 @@ def get_card_to_play_last(trick, hand):
         return likely_cards[0]
 
 
-def get_card_to_play_first(my_hand, state):
+def get_card_to_play_first(my_hand, state, hand):
     weights = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2']
 
     def sort_cards():
@@ -197,7 +197,7 @@ def get_card_to_play(trick, my_hand, state):
 
     if len(trick) == 0:  # length of trick is 0 so that  means ours is first chance
         if len(my_hand):  # If we have cards in hand
-            result = get_card_to_play_first(my_hand, state)
+            result = get_card_to_play_first(my_hand, state, hand)
 
     elif len(trick) == 1 or len(
             trick) == 2:  # Length of trick is 1 we have second chance and if length of trick is 2 we have third chance
