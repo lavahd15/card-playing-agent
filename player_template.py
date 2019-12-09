@@ -112,53 +112,19 @@ def get_card_to_play_last(trick, hand):
         return likely_cards[0]
 
 
-def get_card_to_play_first(my_hand, state, hand):
-    weights = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2']
+def get_card_to_play_first(my_hand, state, my_hand_sorted):
+    card_to_return = ""
 
-    def sort_cards():
-        sorted_cards = []
-        # sort all the cards according to weights not suits
+    for suit in suits:
+        if card_to_return == "" and my_hand_sorted.keys().__contains__(suit) and my_hand_sorted[suit][0] == state[suits.index(suit)][0]:
+            card_to_return = my_hand_sorted[suit][0]
+
+    if card_to_return == "":
         for suit in suits:
-            new_suit_cards = []
-            for weight in weights:
-                for card in my_hand:
-                    if card[0] == weight and card[1] == suit:
-                        new_suit_cards.append(card)
-            sorted_cards.append(new_suit_cards)
-        return sorted_cards
-
-    def is_card_biggest_in_suit(card, state):
-        global suits
-        weight_index = weights.index(card[0])
-        suit_index = suits.index(card[1])
-        suit = state[suit_index]
-        for index in range(0, weight_index):
-            if weights[index] in suit:
-                return False
-        return True
-
-    # sort cards suit wise and rank wise
-    # e.g. sorted_cards = [['AS', 'KS', '8S'], ['7H', '4H'], ['8D', '5D', '3D'], ['4C', '2C']]
-    sorted_cards = sort_cards()
-    # Select the card to play from sorted list
-    for suit in sorted_cards:
-        if len(suit) > 0:
-            card = suit[0]
-            if is_card_biggest_in_suit(card, state):
-                return card  # The Function  will not proceed and even if we have Ace and king of Diamonds it will start with 10 of hearts
-
-    suit_lengths = [len(suit) for suit in sorted_cards]  # list of lengths of suits
-    max_length_suit = max(suit_lengths)
-    max_length_suit_indices = [index for index, length in enumerate(suit_lengths) if
-                               length == max_length_suit]  # index of list having maximum elements in list
-    smallest = 0  # why not 1
-    card_to_return = sorted_cards[max_length_suit_indices[0]][0]
-    for index in max_length_suit_indices:
-        card = sorted_cards[index][max_length_suit - 1]
-        card_rank = card[0]
-        if weights.index(card_rank) > smallest:
-            smallest = weights.index(card_rank)
-            card_to_return = card
+            if card_to_return == "" and my_hand_sorted.keys().__contains__(suit):
+                card_to_return = my_hand_sorted[suit][len(my_hand_sorted[suit]) - 1]
+            if my_hand_sorted.keys().__contains__(suit) and ranks.index((my_hand_sorted[suit][len(my_hand_sorted[suit])-1])[0]) > ranks.index(card_to_return[0]):
+                card_to_return = my_hand_sorted[suit][len(my_hand_sorted[suit])-1]
     return card_to_return
 
 
