@@ -54,10 +54,7 @@ def get_card_to_play_two_three(suit, trick, hand, state):
         return likely_cards[0]
     else:
         cards_available_to_play = []
-        # print(hand[suit_in_play])
         for v_arr in hand[suit_in_play]:
-            # print()
-            # print(v_arr)
             if isinstance(v_arr, list):
                 cards_available_to_play.append(v_arr[0])
             else:
@@ -116,14 +113,14 @@ def get_card_to_play_first(my_hand, state, my_hand_sorted):
     card_to_return = ""
 
     for suit in suits:
-        if card_to_return == "" and my_hand_sorted.keys().__contains__(suit) and my_hand_sorted[suit][0] == state[suits.index(suit)][0]:
+        if card_to_return == "" and my_hand_sorted.keys().__contains__(suit) and my_hand_sorted[suit][0] == state[suits.index(suit)][len(state[suits.index(suit)])-1]:
             card_to_return = my_hand_sorted[suit][0]
 
     if card_to_return == "":
         for suit in suits:
             if card_to_return == "" and my_hand_sorted.keys().__contains__(suit):
                 card_to_return = my_hand_sorted[suit][len(my_hand_sorted[suit]) - 1]
-            if my_hand_sorted.keys().__contains__(suit) and ranks.index((my_hand_sorted[suit][len(my_hand_sorted[suit])-1])[0]) > ranks.index(card_to_return[0]):
+            if my_hand_sorted.keys().__contains__(suit) and ranks.index((my_hand_sorted[suit][len(my_hand_sorted[suit])-1])[0]) < ranks.index(card_to_return[0]):
                 card_to_return = my_hand_sorted[suit][len(my_hand_sorted[suit])-1]
     return card_to_return
 
