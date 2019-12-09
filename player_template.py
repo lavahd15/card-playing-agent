@@ -257,7 +257,6 @@ class Player(object):
 
         self.played_cards = self.played_cards + trick
         self.point[winner] = self.point[winner] + 1
-        print("Scores after the round", self.point)
 
         pass
 
